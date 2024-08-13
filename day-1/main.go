@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 )
 
@@ -21,17 +22,17 @@ func main() {
 	// findTheDifference("abcd", "abced") // 'e'
 	// findTheDifference("", "y")         // 'y'
 
-	// canMakeArithmeticProgression([]int{1, 5, 3})    // true; 1, 3, 5 adalah baris aritmatik +2
-	// canMakeArithmeticProgression([]int{5, 1, 9})    // true; 9, 5, 1 adalah baris aritmatik -4
-	// canMakeArithmeticProgression([]int{1, 2, 4, 8}) // false; 1, 2, 4, 8 bukan baris aritmatik, melainkan geometrik x2
+	canMakeArithmeticProgression([]int{1, 5, 3})    // true; 1, 3, 5 adalah baris aritmatik +2
+	canMakeArithmeticProgression([]int{5, 1, 9})    // true; 9, 5, 1 adalah baris aritmatik -4
+	canMakeArithmeticProgression([]int{1, 2, 4, 8}) // false; 1, 2, 4, 8 bukan baris aritmatik, melainkan geometrik x2
 
 	// tesDeck()
 }
 
 // https://leetcode.com/problems/sign-of-the-product-of-an-array
 func arraySign(nums []int) int {
-	var countNegativeNumbers int = 0;
-	for i :=0; i <len(nums); i++ {
+	var countNegativeNumbers int = 0
+	for i := 0; i < len(nums); i++ {
 		// saya tambah untuk handle kasus perkaliannya sama dengan 0, karena 0 bukan positif atau negatif
 		if nums[i] == 0 {
 			return 0
@@ -54,11 +55,11 @@ func isAnagram(s string, t string) bool {
 		return false
 	}
 
-	firstLetters :=strings.Split(s, "")
-	secondLetters :=strings.Split(t, "")
+	firstLetters := strings.Split(s, "")
+	secondLetters := strings.Split(t, "")
 	length := len(firstLetters)
 
-	for i:=0; i<length; i++ {
+	for i := 0; i < length; i++ {
 		if firstLetters[i] != secondLetters[length-1-i] {
 			return false
 		}
@@ -76,14 +77,14 @@ func findTheDifference(s string, t string) byte {
 	var letterCountMap = map[byte]int{}
 	var letterCountMap2 = map[byte]int{}
 
-	for i:=0; i<len(s); i++ {
+	for i := 0; i < len(s); i++ {
 		letterCountMap[s[i]] += 1
 	}
-	for i:=0; i<len(t); i++ {
+	for i := 0; i < len(t); i++ {
 		letterCountMap2[t[i]] += 1
 	}
 
-	for k,v := range letterCountMap2 {
+	for k, v := range letterCountMap2 {
 		if v != letterCountMap[k] {
 			return k
 		}
@@ -94,8 +95,14 @@ func findTheDifference(s string, t string) byte {
 
 // https://leetcode.com/problems/can-make-arithmetic-progression-from-sequence
 func canMakeArithmeticProgression(arr []int) bool {
-	// write code here
-	return false
+	slices.Sort(arr)
+
+	for i := 1; i < len(arr); i++ {
+		if arr[i]-arr[i-1] != arr[1]-arr[0] {
+			return false
+		}
+	}
+	return true
 }
 
 // Deck represent "standard" deck consist of 52 cards

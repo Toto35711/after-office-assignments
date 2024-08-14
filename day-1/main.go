@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+	"time"
+
+	"math/rand"
 )
 
 func main() {
@@ -138,18 +141,25 @@ func (d Deck) PeekBottom(n int) []Card {
 
 // PeekCardAtIndex return a card at specified index
 func (d Deck) PeekCardAtIndex(idx int) Card {
-	return d.cards[idx-1]
+	return d.cards[idx]
 }
 
 // Shuffle randomly shuffle the deck
 func (d *Deck) Shuffle() {
+	seed := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(seed)
 
+	for i,_ := range d.cards {
+		newPos := r.Intn(len(d.cards)-1)
+		d.cards[i], d.cards[newPos] = d.cards[newPos], d.cards[i]
+	}
 }
 
 // Cut perform single "Cut" technique. Move n top cards to bottom
 // e.g. Deck: [1, 2, 3, 4, 5]. Cut(3) resulting Deck: [4, 5, 1, 2, 3]
 func (d *Deck) Cut(n int) {
 	// write code here
+	
 }
 
 func (c Card) ToString() string {
@@ -180,10 +190,10 @@ func tesDeck() {
 	}
 	fmt.Println("---")
 
-	fmt.Println(deck.PeekCardAtIndex(12).ToString()) // Queen Spade
-	fmt.Println(deck.PeekCardAtIndex(13).ToString()) // King Spade
-	fmt.Println(deck.PeekCardAtIndex(14).ToString()) // Ace Heart
-	fmt.Println(deck.PeekCardAtIndex(15).ToString()) // 2 Heart
+	fmt.Println(deck.PeekCardAtIndex(12).ToString()) // King Spade
+	fmt.Println(deck.PeekCardAtIndex(13).ToString()) // Ace Heart
+	fmt.Println(deck.PeekCardAtIndex(14).ToString()) // 2 Heart
+	fmt.Println(deck.PeekCardAtIndex(15).ToString()) // 3 Heart
 	fmt.Println("---")
 
 	deck.Shuffle()

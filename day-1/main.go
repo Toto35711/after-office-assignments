@@ -121,6 +121,7 @@ type Card struct {
 // [A Spade, 2 Spade,  ..., A Heart, 2 Heart, ..., J Diamond, Q Diamond, K Diamond ]
 // assume Ace-Spade on top of deck.
 func (d *Deck) New() {
+	d.cards = d.cards[:0]
 	for i := 0; i < 4; i++ {
 		for j := 1; j <= 13; j++ {
 			d.cards = append(d.cards, Card{i, j})
@@ -158,8 +159,9 @@ func (d *Deck) Shuffle() {
 // Cut perform single "Cut" technique. Move n top cards to bottom
 // e.g. Deck: [1, 2, 3, 4, 5]. Cut(3) resulting Deck: [4, 5, 1, 2, 3]
 func (d *Deck) Cut(n int) {
-	// write code here
-	
+	first := d.cards[:n]
+	second := d.cards[n:]
+	d.cards = append(second,first...)
 }
 
 func (c Card) ToString() string {

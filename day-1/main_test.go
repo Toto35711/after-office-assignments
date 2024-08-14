@@ -68,7 +68,7 @@ func TestFindTheDifference(t *testing.T) {
 	}
 }
 
-func TestCanMakeArithmeticProgressio(t *testing.T) {
+func TestCanMakeArithmeticProgression(t *testing.T) {
 	cases := []struct {
 		input    []int
 		expected bool
@@ -77,6 +77,7 @@ func TestCanMakeArithmeticProgressio(t *testing.T) {
 		{[]int{5, 1, 9}, true},
 		{[]int{1, 2, 4, 8}, false},
 		{[]int{1, 1, 1, 1}, true},
+		{[]int{1, 1}, true},
 	}
 
 	for _, c := range cases {
